@@ -4,4 +4,8 @@ version = "0.1.0"
 edition = "2024"
 description = "Rust概览"
 
+[lib]
+name = "ch02"
+path = "src/lib.rs"
+
 [dependencies]

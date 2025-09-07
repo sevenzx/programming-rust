@@ -1,6 +1,6 @@
 /// 使用欧几里得算法计算两个整数的最大公约数
 #[allow(dead_code)]
-fn gcd(mut n: u64, mut m: u64) -> u64 {
+pub fn gcd(mut n: u64, mut m: u64) -> u64 {
     assert!(n != 0 && m != 0);
     while m != 0 {
         if m < n {
