@@ -28,6 +28,28 @@ fn parse_complex(s: &str) -> Option<Complex<f64>> {
     }
 }
 
+/// 给定输出图片中一个像素的行和列，返回复平面中相应的点。
+///
+/// `bounds`是一个指定图片的宽和高的值对。
+/// `pixel`是一个（行，列）对，指定图片中的某个像素。
+/// `upper_left`和`lower_right`参数是复平面上的点，
+/// 指定我们的图像覆盖的区域。
+fn pixel_to_point(
+    bounds: (usize, usize),
+    pixel: (usize, usize),
+    upper_left: Complex<f64>,
+    lower_right: Complex<f64>,
+) -> Complex<f64> {
+    let (width, height) = (
+        lower_right.re - upper_left.re,
+        upper_left.im - lower_right.im,
+    );
+    Complex {
+        re: upper_left.re + pixel.0 as f64 * width / bounds.0 as f64,
+        im: upper_left.im - pixel.1 as f64 * height / bounds.1 as f64, // 为什么这里是减法？当我们向下时 pixel.1会增大，但虚部会减小。
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -60,5 +82,21 @@ mod tests {
             })
         );
         assert_eq!(parse_complex(",-0.0625"), None);
+    }
+
+    #[test]
+    fn test_pixel_to_point() {
+        assert_eq!(
+            pixel_to_point(
+                (100, 200),
+                (25, 175),
+                Complex { re: -1.0, im: 1.0 },
+                Complex { re: 1.0, im: -1.0 }
+            ),
+            Complex {
+                re: -0.5,
+                im: -0.75
+            }
+        );
     }
 }
