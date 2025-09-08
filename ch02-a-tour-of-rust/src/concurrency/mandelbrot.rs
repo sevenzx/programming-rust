@@ -6,7 +6,7 @@ use num::Complex;
 /// `z`离开以原点为圆心、2 为半径的圆所需的迭代次数。
 /// 如果`c`似乎在曼德勃罗集里（更确切地说是迭代了`limit`次
 /// 之后仍无法证明`c`不在曼德勃罗集里），就返回`None`。
-fn escape_time(c: Complex<f64>, limit: usize) -> Option<usize> {
+pub fn escape_time(c: Complex<f64>, limit: usize) -> Option<usize> {
     let mut z = Complex { re: 0.0, im: 0.0 };
     for i in 0..limit {
         if z.norm_sqr() > 4.0 {
@@ -17,7 +17,7 @@ fn escape_time(c: Complex<f64>, limit: usize) -> Option<usize> {
     None
 }
 
-fn complex_square_add_loop(c: Complex<f64>) -> Complex<f64> {
+pub fn complex_square_add_loop(c: Complex<f64>) -> Complex<f64> {
     let mut z = Complex { re: 0.0, im: 0.0 };
     for _ in 0..10 {
         z = z * z + c;

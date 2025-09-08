@@ -9,7 +9,7 @@ use std::str::FromStr;
 ///
 /// 如果`s`的格式正确，就返回`Some<(x, y)>`。
 /// 如果不能正确解析，就返回`None`。
-fn parse_pair<T: FromStr>(s: &str, separator: char) -> Option<(T, T)> {
+pub fn parse_pair<T: FromStr>(s: &str, separator: char) -> Option<(T, T)> {
     match s.find(separator) {
         None => None,
         // 可以直接match俩
@@ -21,7 +21,7 @@ fn parse_pair<T: FromStr>(s: &str, separator: char) -> Option<(T, T)> {
 }
 
 /// 把一对逗号分隔的浮点数解析为一个复数
-fn parse_complex(s: &str) -> Option<Complex<f64>> {
+pub fn parse_complex(s: &str) -> Option<Complex<f64>> {
     match parse_pair(s, ',') {
         Some((re, im)) => Some(Complex { re, im }),
         None => None,
@@ -34,7 +34,7 @@ fn parse_complex(s: &str) -> Option<Complex<f64>> {
 /// `pixel`是一个（行，列）对，指定图片中的某个像素。
 /// `upper_left`和`lower_right`参数是复平面上的点，
 /// 指定我们的图像覆盖的区域。
-fn pixel_to_point(
+pub fn pixel_to_point(
     bounds: (usize, usize),
     pixel: (usize, usize),
     upper_left: Complex<f64>,

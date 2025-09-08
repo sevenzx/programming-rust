@@ -9,4 +9,5 @@ name = "ch02"
 path = "src/lib.rs"
 
 [dependencies]
+image = "0.13.0"
 num = "0.4.3"
