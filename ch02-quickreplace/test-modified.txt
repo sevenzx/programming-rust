@@ -1,0 +1,5 @@
+// cargo run "Rust" "Rust" test.txt test-modified.txt
+Hello, Rust
+Hello, Rust
+Hello, Rust
+Hello, Rust

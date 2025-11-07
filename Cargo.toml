@@ -1,6 +1,8 @@
 [workspace]
 members = [
-    "ch01-hello", "ch02-a-tour-of-rust",
+    "ch01-hello",
+    "ch02-a-tour-of-rust",
+    "ch02-quickreplace",
 ]
 
 resolver = "2"
