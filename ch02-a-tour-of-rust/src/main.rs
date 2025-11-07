@@ -1,5 +1,5 @@
 use ch02::concurrency::draw::{render, write_image};
-use ch02::concurrency::parse::{parse_complex, parse_pair};
+use ch02::concurrency::parse::{parse_complex, parse_pair, pixel_to_point};
 use std::env;
 
 fn main() {
@@ -16,7 +16,29 @@ fn main() {
     let upper_left = parse_complex(&args[3]).expect("error parsing upper left corner point");
     let lower_right = parse_complex(&args[4]).expect("error parsing lower right corner point");
     let mut pixels = vec![0; bounds.0 * bounds.1];
-    render(&mut pixels, bounds, upper_left, lower_right);
+
+    // 多线程
+    let threads = 8;
+    let rows_per_thread = bounds.1 / threads;
+    {
+        let bands: Vec<&mut [u8]> = pixels.chunks_mut(rows_per_thread * bounds.0).collect();
+        crossbeam::scope(|spawner| {
+            for (i, band) in bands.into_iter().enumerate() {
+                let top = rows_per_thread * i;
+                let height = band.len() / bounds.0;
+                let band_bounds = (bounds.0, height);
+                let band_upper_left = pixel_to_point(bounds, (0, top), upper_left, lower_right);
+                let band_lower_right =
+                    pixel_to_point(bounds, (bounds.0, top + height), upper_left, lower_right);
+
+                spawner.spawn(move |_| {
+                    render(band, band_bounds, band_upper_left, band_lower_right);
+                });
+            }
+        })
+        .expect("error joining threads");
+    }
+
     write_image(&args[1], &pixels, bounds).expect("error writing PNG file");
 }
 
@@ -46,3 +68,15 @@ fn main() {
 
     println!("The greatest common divisor of {:?} is {}", numbers, d);
 }*/
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_pixel_to_point() {
+        let bounds = (4, 5);
+        let pixels = vec![0; bounds.0 * bounds.1];
+        println!("{:?}", pixels);
+        let chunks: Vec<_> = pixels.chunks(3).collect();
+        println!("{:?}", chunks);
+    }
+}
