@@ -6,8 +6,8 @@ fn main() {
     move_demo();
 }
 
+/// reference_count 操作
 fn reference_count() {
-    // ==== case1 ====
     let s: Rc<String> = Rc::new("seven".to_string());
     let t: Rc<String> = s.clone();
     let u: Rc<String> = t.clone();
