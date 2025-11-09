@@ -3,6 +3,7 @@ members = [
     "ch01-hello",
     "ch02-a-tour-of-rust",
     "ch02-quickreplace",
+    "ch04-ownership",
 ]
 
 resolver = "2"
