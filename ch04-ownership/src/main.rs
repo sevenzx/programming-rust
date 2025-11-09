@@ -1,7 +1,33 @@
 fn main() {
+    copy_demo();
     move_demo();
 }
 
+/// copy 操作
+fn copy_demo() {
+    // 标准的 Copy 类型包括所有的机器整数和浮点数类型、char 和 bool 类型，以及少数其他类型。
+    // 所有元素都是 Copy 类型的元组或数组也是 Copy 类型。
+    // ==== case1 ====
+    // 加上 #[derive(Copy, Clone)]  println!("My label number is: {}", label.number); 就能正常编译通过了
+    #[derive(Copy, Clone)]
+    struct Label {
+        number: u32,
+    }
+
+    // 用不是Copy类型的，比如String，不能编译通过
+    // #[derive(Copy, Clone)]
+    // struct StringLabel { name: String }
+
+    fn print(l: Label) {
+        println!("STAMP: {}", l.number);
+    }
+
+    let label = Label { number: 123 };
+    print(label);
+    println!("My label number is: {}", label.number);
+}
+
+/// move 操作
 fn move_demo() {
     // ==== case1 ====
     let mut v = Vec::new();
