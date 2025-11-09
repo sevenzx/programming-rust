@@ -1,6 +1,23 @@
+use std::rc::Rc;
+
 fn main() {
+    reference_count();
     copy_demo();
     move_demo();
+}
+
+fn reference_count() {
+    // ==== case1 ====
+    let s: Rc<String> = Rc::new("seven".to_string());
+    let t: Rc<String> = s.clone();
+    let u: Rc<String> = t.clone();
+    println!("s = {}, t = {}, u = {}", s, t, u);
+
+    assert!(s.contains("even"));
+    assert_eq!(s.find("ve"), Some(2));
+
+    // 一个 Rc 指针拥有的值是不可变的。假设你尝试在字符串的结尾添加文本:
+    // u.push_str("eleven"); Rust将会报错
 }
 
 /// copy 操作
