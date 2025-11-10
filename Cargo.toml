@@ -6,4 +6,5 @@ members = [
   "ch02-quickreplace",
   "ch04-ownership",
   "ch05-references-to-values",
+  "ch05-working-with-references",
 ]
