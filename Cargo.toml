@@ -1,10 +1,9 @@
 [workspace]
-members = [
-    "ch01-hello",
-    "ch02-a-tour-of-rust",
-    "ch02-quickreplace",
-    "ch04-ownership",
-    "ch05-references-to-values",
-]
-
 resolver = "2"
+members = [
+  "ch01-hello",
+  "ch02-a-tour-of-rust",
+  "ch02-quickreplace",
+  "ch04-ownership",
+  "ch05-references-to-values",
+]
