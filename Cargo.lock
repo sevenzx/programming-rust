@@ -61,6 +61,10 @@ name = "ch04-ownership"
 version = "0.1.0"
 
 [[package]]
+name = "ch05-references-safety"
+version = "0.1.0"
+
+[[package]]
 name = "ch05-references-to-values"
 version = "0.1.0"
 
