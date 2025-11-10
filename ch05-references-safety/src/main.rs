@@ -10,8 +10,22 @@ fn store_static_ref(p: &'static i32) {
     }
 }
 
+// 这可以被更简洁地写为：fn pass_ref_to_fn(p: &i32)
+// 但现在让我们写出生命周期
+fn pass_ref_to_fn<'a>(p: &'a i32) {
+    println!("Got a ref to {}", p);
+}
+
 fn main() {
     // 1. 引用作为函数参数
     store_static_ref(&32);
     store_static_ref(&WORTH_POINTING_AT);
+    // 这样会编译失败：引用 &x 不能生存的比 x 更久，但传递给 store_static_ref 时
+    // 我们约束它至少要 和'static 生存的一样久。
+    // let x = 64;
+    // store_static_ref(&x);
+
+    // 2. 向函数传递引用
+    let x = 64;
+    pass_ref_to_fn(&x);
 }
